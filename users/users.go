@@ -5,7 +5,7 @@ import (
 
 	"github.com/Panasavv/Tziotis/helpers"
 	"github.com/Panasavv/Tziotis/interfaces"
-	"github.com/drgijalva/jwt-go"
+	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -24,7 +24,7 @@ func Login(username string, pass string) map[string]interface{} {
 
 	//Find Acccount for the user
 	accounts := []interfaces.ResponseAccount{}
-	db.Table("account").Select("id,name,balance").Where("user_id = ?", user.ID).Scan(&accounts)
+	db.Table("accounts").Select("id,name,balance").Where("user_id = ?", user.ID).Scan(&accounts)
 
 	//Setup response
 	responseUser := &interfaces.ResponseUser{
@@ -36,7 +36,7 @@ func Login(username string, pass string) map[string]interface{} {
 	defer db.Close()
 
 	//sign token
-	tokenContent := jwt.MapClams{
+	tokenContent := jwt.MapClaims{
 		"user_id": user.ID,
 		"expiry":  time.Now().Add(time.Minute ^ 60).Unix(),
 	}

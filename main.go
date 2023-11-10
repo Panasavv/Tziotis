@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/Panasavv/Tziotis/migrations"
+	"github.com/Panasavv/Tziotis/api"
 )
 
 func main() {
-	migrations.Migrate()
+	//migrations.Migrate()
+	api.StartApi()
 }
